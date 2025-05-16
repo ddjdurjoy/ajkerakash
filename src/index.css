@@ -5,6 +5,7 @@
 @layer base {
   html {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    @apply text-base antialiased;
   }
 
   html[lang="bn"] {
@@ -12,63 +13,153 @@
   }
 
   body {
-    @apply min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-800;
+    @apply min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white;
+  }
+
+  /* Improved tap targets for mobile */
+  button, a {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Better text readability */
+  p {
+    @apply leading-relaxed;
   }
 }
 
 @layer components {
   .weather-container {
-    @apply container mx-auto px-4 sm:px-6 lg:px-8 py-8;
+    @apply container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 max-w-7xl;
   }
   
   .weather-card {
-    @apply bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl border border-gray-100 dark:border-gray-700;
+    @apply bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-lg 
+           p-4 sm:p-6 transition-all duration-300 hover:shadow-xl 
+           border border-gray-100 dark:border-gray-700;
   }
 
   .glass-card {
-    @apply bg-white/60 dark:bg-gray-800/60 backdrop-blur-md border border-gray-200 dark:border-gray-700;
+    @apply bg-white/60 dark:bg-gray-800/60 backdrop-blur-md 
+           border border-gray-200 dark:border-gray-700 rounded-xl 
+           shadow-lg hover:shadow-xl transition-all duration-300;
   }
 
   .weather-icon {
-    @apply w-20 h-20 object-contain;
+    @apply w-16 h-16 sm:w-20 sm:h-20 object-contain 
+           transform hover:scale-110 transition-transform duration-300;
   }
 
   .temp-text {
-    @apply text-5xl font-bold text-gray-900 dark:text-white;
+    @apply text-3xl sm:text-4xl lg:text-5xl font-bold 
+           text-gray-900 dark:text-white leading-tight;
   }
 
   .desc-text {
-    @apply text-lg text-gray-600 dark:text-gray-300;
+    @apply text-base sm:text-lg text-gray-600 dark:text-gray-300;
   }
 
   .stat-card {
-    @apply flex items-center space-x-3 bg-blue-50/50 dark:bg-gray-700/50 rounded-xl p-4;
+    @apply flex items-center space-x-2 sm:space-x-3 
+           bg-white/50 dark:bg-gray-700/50 rounded-xl 
+           p-3 sm:p-4 hover:bg-white/70 dark:hover:bg-gray-600/50 
+           transition-all duration-300 transform hover:-translate-y-0.5;
   }
 
   .stat-icon {
-    @apply text-2xl text-blue-500 dark:text-blue-400;
+    @apply text-xl sm:text-2xl text-blue-500 dark:text-blue-400;
   }
 
   .location-selector {
-    @apply relative w-full max-w-xs bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500;
+    @apply relative w-full cursor-pointer 
+           bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg 
+           shadow-md border border-gray-200 dark:border-gray-700 
+           p-2 sm:p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 
+           hover:bg-white/100 dark:hover:bg-gray-700/90 
+           transition-all duration-200;
   }
 
   .forecast-scroll {
-    @apply flex space-x-4 overflow-x-auto pb-4;
+    @apply flex space-x-3 sm:space-x-4 overflow-x-auto pb-4 
+           scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600 
+           scrollbar-track-transparent;
   }
 
   .forecast-card {
-    @apply flex-none p-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-700 w-24 text-center;
+    @apply flex-none p-3 sm:p-4 
+           bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg 
+           border border-gray-200 dark:border-gray-700 
+           w-20 sm:w-24 text-center 
+           hover:bg-white/90 dark:hover:bg-gray-700/80 
+           transition-all duration-300 transform hover:-translate-y-1;
+  }
+
+  /* Responsive text utilities */
+  .text-adaptive {
+    @apply text-sm sm:text-base lg:text-lg;
+  }
+
+  .heading-adaptive {
+    @apply text-xl sm:text-2xl lg:text-3xl font-bold;
+  }
+
+  /* Improved scrollbars */
+  .scrollbar-thin::-webkit-scrollbar {
+    @apply h-1.5;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-gray-400/50 dark:bg-gray-600/50 rounded-full;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500/70 dark:bg-gray-500/70;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
   }
 }
 
 /* Map styles */
 .leaflet-container {
-  height: 100%;
-  width: 100%;
+  @apply h-full w-full rounded-xl overflow-hidden;
   z-index: 1;
 }
 
 .leaflet-control-container {
   z-index: 2;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
 }

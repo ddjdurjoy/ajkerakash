@@ -40,47 +40,49 @@ function App() {
       {weather?.current && (
         <WeatherBackground weatherCode={weather.current.weather[0].icon} />
       )}
-      <div className="weather-container py-12">
-        <div className="max-w-sm mx-auto mb-12">
+      <div className="weather-container px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
+        <div className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto mb-8 sm:mb-12">
           <LocationSelector 
             currentLocation={location} 
             onLocationChange={setLocation} 
           />
         </div>
         
-        <div className="grid gap-8 lg:grid-cols-3">
-          <div className="lg:col-span-2 space-y-8">
-            <div className="transform hover:scale-[1.02] transition-transform duration-300">
-              <WeatherCard weather={weather} loading={loading} />
-            </div>
-            
-            <div className="transform hover:scale-[1.02] transition-transform duration-300">
-              <HourlyForecast forecast={weather?.hourly} loading={loading} />
-            </div>
-            
-            {weather?.current && (
+        <div className="max-w-7xl mx-auto">
+          <div className="grid gap-4 sm:gap-6 lg:gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="md:col-span-2 space-y-4 sm:space-y-6 lg:space-y-8">
               <div className="transform hover:scale-[1.02] transition-transform duration-300">
-                <WeatherTips weatherCode={weather.current.weather[0].icon} />
+                <WeatherCard weather={weather} loading={loading} />
               </div>
-            )}
-          </div>
-          
-          <div className="space-y-8">
-            <div className="transform hover:scale-[1.02] transition-transform duration-300">
-              <DateTimeDisplay />
+              
+              <div className="transform hover:scale-[1.02] transition-transform duration-300">
+                <HourlyForecast forecast={weather?.hourly} loading={loading} />
+              </div>
+              
+              {weather?.current && (
+                <div className="transform hover:scale-[1.02] transition-transform duration-300">
+                  <WeatherTips weatherCode={weather.current.weather[0].icon} />
+                </div>
+              )}
             </div>
             
-            {weather?.current && (
-              <div>
-                <SunMoonCard 
-                  sunrise={weather.current.sunrise} 
-                  sunset={weather.current.sunset}
-                />
+            <div className="space-y-4 sm:space-y-6 lg:space-y-8">
+              <div className="transform hover:scale-[1.02] transition-transform duration-300">
+                <DateTimeDisplay />
               </div>
-            )}
-            
-            <div className="transform hover:scale-[1.02] transition-transform duration-300">
-              <WeatherMap location={location} />
+              
+              {weather?.current && (
+                <div className="transform hover:scale-[1.02] transition-transform duration-300">
+                  <SunMoonCard 
+                    sunrise={weather.current.sunrise} 
+                    sunset={weather.current.sunset}
+                  />
+                </div>
+              )}
+              
+              <div className="transform hover:scale-[1.02] transition-transform duration-300">
+                <WeatherMap location={location} />
+              </div>
             </div>
           </div>
         </div>
