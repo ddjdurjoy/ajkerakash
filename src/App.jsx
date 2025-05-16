@@ -8,6 +8,7 @@ import WeatherMap from './components/WeatherMap'
 import WeatherTips from './components/WeatherTips'
 import Header from './components/Header'
 import WeatherBackground from './components/WeatherBackground'
+import SunMoonCard from './components/SunMoonCard'
 import { getWeatherTheme } from './utils/weatherTheme'
 
 function App() {
@@ -68,6 +69,15 @@ function App() {
             <div className="transform hover:scale-[1.02] transition-transform duration-300">
               <DateTimeDisplay />
             </div>
+            
+            {weather?.current && (
+              <div>
+                <SunMoonCard 
+                  sunrise={weather.current.sunrise} 
+                  sunset={weather.current.sunset}
+                />
+              </div>
+            )}
             
             <div className="transform hover:scale-[1.02] transition-transform duration-300">
               <WeatherMap location={location} />
