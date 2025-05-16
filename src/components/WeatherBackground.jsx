@@ -2,14 +2,14 @@ import { useEffect, useRef } from 'react';
 
 const RainDrop = ({ delay }) => (
   <div 
-    className="absolute animate-rain opacity-70"
+    className="absolute animate-rain"
     style={{
       left: `${Math.random() * 100}%`,
       animationDelay: `${delay}s`,
       top: '-20px'
     }}
   >
-    <div className="h-8 w-0.5 bg-gradient-to-b from-transparent via-blue-400/50 to-blue-400/70 rounded-full transform -rotate-15"></div>
+    <div className="h-10 w-[1px] bg-gradient-to-b from-transparent via-blue-400/40 to-blue-400/60 rounded-full transform rotate-[20deg]"></div>
   </div>
 );
 
@@ -24,9 +24,14 @@ const Cloud = ({ delay, scale }) => (
     }}
   >
     <div className="relative">
-      <div className="absolute bg-white/30 dark:bg-gray-300/30 rounded-full w-16 h-16 blur-sm"></div>
-      <div className="absolute bg-white/30 dark:bg-gray-300/30 rounded-full w-20 h-20 -left-6 top-2 blur-sm"></div>
-      <div className="absolute bg-white/30 dark:bg-gray-300/30 rounded-full w-16 h-16 left-8 top-1 blur-sm"></div>
+      {/* Main cloud body */}
+      <div className="absolute bg-white/40 dark:bg-gray-300/40 rounded-[50px] w-32 h-16 blur-sm"></div>
+      
+      {/* Cloud puffs */}
+      <div className="absolute bg-white/40 dark:bg-gray-300/40 rounded-full w-20 h-20 -left-4 -top-6 blur-sm"></div>
+      <div className="absolute bg-white/40 dark:bg-gray-300/40 rounded-full w-20 h-20 left-8 -top-4 blur-sm"></div>
+      <div className="absolute bg-white/40 dark:bg-gray-300/40 rounded-full w-16 h-16 left-20 top-0 blur-sm"></div>
+      <div className="absolute bg-white/40 dark:bg-gray-300/40 rounded-full w-16 h-16 left-6 -top-2 blur-sm"></div>
     </div>
   </div>
 );
@@ -53,7 +58,7 @@ const ThunderBolt = ({ delay }) => (
       top: '0'
     }}
   >
-    <div className="h-32 w-1 bg-gradient-to-b from-yellow-300/0 via-yellow-300/70 to-yellow-300/0"></div>
+    <div className="h-[60vh] w-1 bg-gradient-to-b from-yellow-300/0 via-yellow-300/70 to-yellow-300/0"></div>
   </div>
 );
 
@@ -75,25 +80,38 @@ export default function WeatherBackground({ weatherCode }) {
 
     // Add weather elements
     if (isRaining) {
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 100; i++) {
         const drop = document.createElement('div');
-        drop.innerHTML = `<div class="absolute animate-rain opacity-70" style="left: ${Math.random() * 100}%; animation-delay: ${Math.random() * 2}s; top: -20px;">
-          <div class="h-8 w-0.5 bg-gradient-to-b from-transparent via-blue-400/50 to-blue-400/70 rounded-full transform -rotate-15"></div>
-        </div>`;
+        const delay = Math.random() * 2;
+        const leftPos = Math.random() * 100;
+        drop.innerHTML = `
+          <div class="absolute animate-rain" style="left: ${leftPos}%; animation-delay: ${delay}s; top: -20px;">
+            <div class="h-10 w-[1px] bg-gradient-to-b from-transparent via-blue-400/40 to-blue-400/60 rounded-full transform rotate-[20deg]"></div>
+          </div>
+        `;
         container.appendChild(drop.firstChild);
       }
     }
 
     if (isCloudy) {
-      for (let i = 0; i < 6; i++) {
+      for (let i = 0; i < 8; i++) {
         const cloud = document.createElement('div');
-        cloud.innerHTML = `<div class="absolute animate-float" style="left: ${Math.random() * 100}%; animation-delay: ${Math.random() * 3}s; top: ${Math.random() * 30}%; transform: scale(${0.5 + Math.random()});">
-          <div class="relative">
-            <div class="absolute bg-white/30 dark:bg-gray-300/30 rounded-full w-16 h-16 blur-sm"></div>
-            <div class="absolute bg-white/30 dark:bg-gray-300/30 rounded-full w-20 h-20 -left-6 top-2 blur-sm"></div>
-            <div class="absolute bg-white/30 dark:bg-gray-300/30 rounded-full w-16 h-16 left-8 top-1 blur-sm"></div>
+        const delay = Math.random() * 20;
+        const scale = 0.3 + Math.random() * 0.7;
+        const leftPos = Math.random() * 100;
+        const topPos = Math.random() * 30;
+        
+        cloud.innerHTML = `
+          <div class="absolute animate-float" style="left: ${leftPos}%; animation-delay: ${delay}s; top: ${topPos}%; transform: scale(${scale});">
+            <div class="relative">
+              <div class="absolute bg-white/40 dark:bg-gray-300/40 rounded-[50px] w-32 h-16 blur-sm"></div>
+              <div class="absolute bg-white/40 dark:bg-gray-300/40 rounded-full w-20 h-20 -left-4 -top-6 blur-sm"></div>
+              <div class="absolute bg-white/40 dark:bg-gray-300/40 rounded-full w-20 h-20 left-8 -top-4 blur-sm"></div>
+              <div class="absolute bg-white/40 dark:bg-gray-300/40 rounded-full w-16 h-16 left-20 top-0 blur-sm"></div>
+              <div class="absolute bg-white/40 dark:bg-gray-300/40 rounded-full w-16 h-16 left-6 -top-2 blur-sm"></div>
+            </div>
           </div>
-        </div>`;
+        `;
         container.appendChild(cloud.firstChild);
       }
     }
@@ -101,9 +119,13 @@ export default function WeatherBackground({ weatherCode }) {
     if (isSnowing) {
       for (let i = 0; i < 50; i++) {
         const snowflake = document.createElement('div');
-        snowflake.innerHTML = `<div class="absolute animate-snow" style="left: ${Math.random() * 100}%; animation-delay: ${Math.random() * 3}s; top: -20px;">
-          <div class="h-2 w-2 bg-white dark:bg-gray-200 rounded-full opacity-70"></div>
-        </div>`;
+        const delay = Math.random() * 3;
+        const leftPos = Math.random() * 100;
+        snowflake.innerHTML = `
+          <div class="absolute animate-snow" style="left: ${leftPos}%; animation-delay: ${delay}s; top: -20px;">
+            <div class="h-2 w-2 bg-white dark:bg-gray-200 rounded-full opacity-70"></div>
+          </div>
+        `;
         container.appendChild(snowflake.firstChild);
       }
     }
@@ -111,9 +133,12 @@ export default function WeatherBackground({ weatherCode }) {
     if (isThundering) {
       const addThunder = () => {
         const thunder = document.createElement('div');
-        thunder.innerHTML = `<div class="absolute animate-thunder" style="left: ${Math.random() * 100}%; top: 0;">
-          <div class="h-32 w-1 bg-gradient-to-b from-yellow-300/0 via-yellow-300/70 to-yellow-300/0"></div>
-        </div>`;
+        const leftPos = Math.random() * 100;
+        thunder.innerHTML = `
+          <div class="absolute animate-thunder" style="left: ${leftPos}%; top: 0;">
+            <div class="h-[60vh] w-1 bg-gradient-to-b from-yellow-300/0 via-yellow-300/70 to-yellow-300/0"></div>
+          </div>
+        `;
         container.appendChild(thunder.firstChild);
         setTimeout(() => thunder.firstChild?.remove(), 1000);
       };
