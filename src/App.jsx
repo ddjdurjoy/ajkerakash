@@ -6,6 +6,7 @@ import DateTimeDisplay from './components/DateTimeDisplay'
 import LocationSelector from './components/LocationSelector'
 import WeatherMap from './components/WeatherMap'
 import WeatherTips from './components/WeatherTips'
+import Header from './components/Header'
 import { getWeatherTheme } from './utils/weatherTheme'
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
 
   return (
     <div className={`min-h-screen transition-colors duration-500 ${theme?.background || 'bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-800'}`}>
+      <Header />
       <div className="weather-container py-12">
         <div className="max-w-sm mx-auto mb-12">
           <LocationSelector 
