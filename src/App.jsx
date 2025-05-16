@@ -32,14 +32,17 @@ function App() {
   const theme = weather?.current ? getWeatherTheme(weather.current.weather[0].icon) : null
 
   return (
-    <div className={`min-h-screen transition-colors duration-500 ${theme?.background || 'bg-gray-50'}`}>
-      <div className="weather-container py-8">
+    <div className={`min-h-screen transition-colors duration-500 ${theme?.background || 'bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-800'}`}>
+      <div className="weather-container">
+        <div className="max-w-xs mx-auto mb-8">
+          <LocationSelector 
+            currentLocation={location} 
+            onLocationChange={setLocation} 
+          />
+        </div>
+        
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            <LocationSelector 
-              currentLocation={location} 
-              onLocationChange={setLocation} 
-            />
+          <div className="lg:col-span-2 space-y-6">
             <WeatherCard weather={weather} loading={loading} />
             <HourlyForecast forecast={weather?.hourly} loading={loading} />
             {weather?.current && (

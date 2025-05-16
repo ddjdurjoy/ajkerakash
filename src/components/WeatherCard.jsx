@@ -4,10 +4,23 @@ export default function WeatherCard({ weather, loading }) {
   if (loading) {
     return (
       <div className="weather-card animate-pulse">
-        <div className="h-32 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4"></div>
-        <div className="space-y-3">
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+        <div className="flex items-center justify-between mb-8">
+          <div className="space-y-3">
+            <div className="h-12 w-32 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+            <div className="h-6 w-24 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+          </div>
+          <div className="h-24 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+        </div>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="stat-card animate-pulse">
+              <div className="h-10 w-10 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+              <div className="space-y-2 flex-1">
+                <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                <div className="h-6 w-20 bg-gray-200 dark:bg-gray-700 rounded"></div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     )
@@ -16,7 +29,7 @@ export default function WeatherCard({ weather, loading }) {
   if (!weather?.current) {
     return (
       <div className="weather-card">
-        <p className="text-gray-500 dark:text-gray-400">No weather data available</p>
+        <p className="text-gray-500 dark:text-gray-400 text-center">No weather data available</p>
       </div>
     )
   }
@@ -25,40 +38,40 @@ export default function WeatherCard({ weather, loading }) {
 
   return (
     <div className="weather-card">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-8">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+          <h2 className="temp-text">
             {Math.round(main.temp)}°C
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 capitalize">
+          <p className="desc-text capitalize">
             {conditions[0].description}
           </p>
         </div>
         <img
           src={`https://openweathermap.org/img/wn/${conditions[0].icon}@4x.png`}
           alt={conditions[0].description}
-          className="w-24 h-24"
+          className="weather-icon"
         />
       </div>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         <WeatherStat
-          icon={<WiThermometer className="w-6 h-6" />}
+          icon={<WiThermometer />}
           label="Feels Like"
           value={`${Math.round(main.feels_like)}°C`}
         />
         <WeatherStat
-          icon={<WiHumidity className="w-6 h-6" />}
+          icon={<WiHumidity />}
           label="Humidity"
           value={`${main.humidity}%`}
         />
         <WeatherStat
-          icon={<WiStrongWind className="w-6 h-6" />}
+          icon={<WiStrongWind />}
           label="Wind Speed"
           value={`${Math.round(wind.speed * 3.6)} km/h`}
         />
         <WeatherStat
-          icon={<WiBarometer className="w-6 h-6" />}
+          icon={<WiBarometer />}
           label="Pressure"
           value={`${main.pressure} hPa`}
         />
@@ -69,11 +82,11 @@ export default function WeatherCard({ weather, loading }) {
 
 function WeatherStat({ icon, label, value }) {
   return (
-    <div className="flex items-center space-x-2">
-      <div className="text-gray-500 dark:text-gray-400">{icon}</div>
+    <div className="stat-card">
+      <div className="stat-icon">{icon}</div>
       <div>
         <p className="text-sm text-gray-500 dark:text-gray-400">{label}</p>
-        <p className="font-medium text-gray-900 dark:text-white">{value}</p>
+        <p className="text-lg font-semibold text-gray-900 dark:text-white">{value}</p>
       </div>
     </div>
   )

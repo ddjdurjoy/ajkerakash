@@ -7,12 +7,14 @@ export default function WeatherMap({ location }) {
       <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
         Weather Radar
       </h3>
-      <div className="aspect-video rounded-lg overflow-hidden">
+      <div className="aspect-video rounded-lg overflow-hidden relative">
         <iframe
           title="Weather Map"
           src={mapUrl}
           frameBorder="0"
-          className="w-full h-full"
+          className="w-full h-full absolute inset-0"
+          style={{ minHeight: '400px' }}
+          allowFullScreen
         ></iframe>
       </div>
     </div>
